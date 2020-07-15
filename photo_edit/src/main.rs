@@ -22,7 +22,8 @@ fn read_user_input() {
         file_names.remove(0);
     }
 
-
-    exif_reader(file_names);
-
+    match exif_reader(file_names) {
+        Err(err) => println!("{:?}", err),
+        _ => ()
+    }
 }
