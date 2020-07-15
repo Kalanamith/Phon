@@ -4,7 +4,7 @@ pub mod exif_data {
     use std::path::Path;
     use std::fs::File;
     use std::io::BufReader;
-    use exif::{In, Reader, Value, Tag};
+    use exif::{Exif, In, Reader, Value, Tag};
     use image::GenericImageView;
 
     pub fn exif_reader(file_names: Vec<String>) -> std::io::Result<()>{
@@ -18,23 +18,7 @@ pub mod exif_data {
                 let exif_data =  reader.read_from_container(&mut buf_reader);
                 let exif_data = match exif_data {
                     Ok(exif) => {
-                        if let Some(field) = exif.get_field(
-                            Tag::Orientation, In::PRIMARY
-                        ) {
-
-                            if let Some(orientation) = field.value.get_uint(0) {
-                                println!("orientation {}.", orientation);
-
-                                match orientation {
-                                    8|3|6 => {
-                                        println!("Correction needed");
-                                        exif_fixer(&fname, orientation);
-                                    },
-                                    _ => println!("Correction not needed"),
-                                }
-                            }
-
-                        }
+                        pass_exif(&fname, exif)
                     },
                     Err(err) => {
                         println!("Exif data  not found");
@@ -48,6 +32,22 @@ pub mod exif_data {
         }
 
         Ok(())
+    }
+
+    fn pass_exif(fname: &String, exif: Exif) {
+        if let Some(field) = exif.get_field(Tag::Orientation, In::PRIMARY) {
+            if let Some(orientation) = field.value.get_uint(0) {
+                println!("orientation {}.", orientation);
+
+                match orientation {
+                    8 | 3 | 6 => {
+                        println!("Correction needed");
+                        exif_fixer(&fname, orientation);
+                    },
+                    _ => println!("Correction not needed"),
+                }
+            }
+        }
     }
 
     /// Fix orientation of a file and writes back without exif data
