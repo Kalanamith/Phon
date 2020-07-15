@@ -12,15 +12,15 @@ fn main() {
 /// Reads user input
 /// Calls method `exif_fixer()`
 fn read_user_input() {
-    let mut file_name_args: Vec<String> = env::args().collect();
-    file_name_args.remove(0);
-    if file_name_args.len() == 0 {
+    let mut file_names: Vec<String> = env::args().collect();
+
+    if file_names.len() == 0 {
         println!("No file names were given");
     } else {
-        file_name_args.remove(0);
+        file_names.remove(0);
     }
 
 
-    exif_reader();
+    exif_reader(file_names);
 
 }
