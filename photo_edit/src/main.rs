@@ -1,4 +1,4 @@
-use exif_fixer::exif_fixer;
+use exif_fixer::exif_data::exif_reader;
 use std::env;
 
 fn main() {
@@ -21,6 +21,6 @@ fn read_user_input() {
     }
 
 
-    exif_fixer();
+    exif_reader();
 
 }
