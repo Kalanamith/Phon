@@ -6,6 +6,7 @@ pub mod exif_data {
     use std::io::BufReader;
     use exif::{Exif, In, Reader, Tag};
 
+    /// Reads exif data
     pub fn exif_reader(file_names: Vec<String>) -> std::io::Result<()>{
         for fname in file_names {
             if Path::new(&fname).is_file(){
