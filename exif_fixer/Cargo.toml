@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 kamadak-exif = "0.5.1"
+image = "0.23.6"
