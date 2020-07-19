@@ -10,7 +10,6 @@
 * Read version from .env
 * Check type of image files
 * Write back exif data
-* Use panic and bubble up exceptions
 * Use processes to do batch processing of image files ( May be a task queue )
 * Add unit tests for exif fixer crate
 * Vector may not efficient to store larger strings, custom struct type will help (needs to explore more)
